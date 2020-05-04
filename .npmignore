@@ -4,3 +4,4 @@ test/
 .vscode/
 gulpfile.js
 npm-shrinkwrap.json
+bpm.config.js.demo

@@ -1,6 +1,7 @@
 module.exports = {
   region: 'oss-cn-beijing',
-  accessKeyId: 'LTAI4Fys8w1Uz4wQshs8k58X',
-  accessKeySecret: 'OXagnyeGj1fMVzLEfFlhPkfenN3KsF',
-  bucket: 'butterfly001'
+  accessKeyId: 'xxxxxx',
+  accessKeySecret: 'xxxxxx',
+  bucket: 'xxxxxx',
+  domain: 'xxxxx'
 };
