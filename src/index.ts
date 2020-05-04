@@ -1,15 +1,18 @@
 import { BostonPackageManager } from './manager';
+import configHelper from './config';
+import packageHelper from './package';
 import Commander from 'commander';
 import { EnumModuleType } from '@xes/dh-boston-type';
 import ora from 'ora';
 import path from 'path';
+import fs from 'fs';
 
 export default function (program: Commander.Command) {
 
   program
-    .command('publish <name>')
+    .command('publish [name]')
     .description('publish boston library')
-    .requiredOption('-s, --semver <semver>', 'boston library semantic version')
+    .option('-s, --semver <semver>', 'boston library semantic version')
     .option('-d, --dir <dir>', 'local directory of library', 'dist')
     .option('-t, --type <type>', 'boston library type', 'module')
     .option('-o, --online <online>', 'production environment or not', false)
@@ -22,7 +25,21 @@ export default function (program: Commander.Command) {
           isOnline: online,
           testKind: kind
         });
-        const result = await bpm.publish(path.resolve(process.cwd(), dir) + '/', type, name, semver);
+        // 如果没有传递semver，则从当前运行目录下的package获取版本号
+        if (!semver) {
+          semver = packageHelper.version;
+        }
+        // 如果没有传递name，则从当前运行目录下的package获取名称
+        if (!name) {
+          name = packageHelper.name;
+        }
+
+        const distPath = path.resolve(process.cwd(), dir) + '/';
+        if (!fs.existsSync(distPath)) {
+          throw new Error(`发布失败，${distPath}不存在`);
+        }
+
+        const result = await bpm.publish(distPath, type, name, semver);
         spinner.stop();
         if (result) {
           console.log(`${name}的v${semver}版本发布成功！`);
@@ -61,6 +78,16 @@ export default function (program: Commander.Command) {
       } catch (e) {
         spinner.stop();
         throw e;
+      }
+    });
+
+  program
+    .command('config')
+    .description('set customly options of manager')
+    .requiredOption('-n --domain <domain>', 'boston registry domain name')
+    .action(async function ({ domain }: { domain: string }) {
+      if (domain) {
+        configHelper.update('domain', domain);
       }
     });
 

@@ -40,13 +40,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var manager_1 = require("./manager");
+var config_1 = __importDefault(require("./config"));
+var package_1 = __importDefault(require("./package"));
 var ora_1 = __importDefault(require("ora"));
 var path_1 = __importDefault(require("path"));
+var fs_1 = __importDefault(require("fs"));
 function default_1(program) {
     program
-        .command('publish <name>')
+        .command('publish [name]')
         .description('publish boston library')
-        .requiredOption('-s, --semver <semver>', 'boston library semantic version')
+        .option('-s, --semver <semver>', 'boston library semantic version')
         .option('-d, --dir <dir>', 'local directory of library', 'dist')
         .option('-t, --type <type>', 'boston library type', 'module')
         .option('-o, --online <online>', 'production environment or not', false)
@@ -54,7 +57,7 @@ function default_1(program) {
         .action(function (name, _a) {
         var semver = _a.semver, dir = _a.dir, type = _a.type, online = _a.online, kind = _a.kind;
         return __awaiter(this, void 0, void 0, function () {
-            var spinner, bpm, result, e_1;
+            var spinner, bpm, distPath, result, e_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -67,7 +70,19 @@ function default_1(program) {
                             isOnline: online,
                             testKind: kind
                         });
-                        return [4 /*yield*/, bpm.publish(path_1.default.resolve(process.cwd(), dir) + '/', type, name, semver)];
+                        // 如果没有传递semver，则从当前运行目录下的package获取版本号
+                        if (!semver) {
+                            semver = package_1.default.version;
+                        }
+                        // 如果没有传递name，则从当前运行目录下的package获取名称
+                        if (!name) {
+                            name = package_1.default.name;
+                        }
+                        distPath = path_1.default.resolve(process.cwd(), dir) + '/';
+                        if (!fs_1.default.existsSync(distPath)) {
+                            throw new Error("\u53D1\u5E03\u5931\u8D25\uFF0C" + distPath + "\u4E0D\u5B58\u5728");
+                        }
+                        return [4 /*yield*/, bpm.publish(distPath, type, name, semver)];
                     case 2:
                         result = _b.sent();
                         spinner.stop();
@@ -126,6 +141,21 @@ function default_1(program) {
                         throw e_2;
                     case 4: return [2 /*return*/];
                 }
+            });
+        });
+    });
+    program
+        .command('config')
+        .description('set customly options of manager')
+        .requiredOption('-n --domain <domain>', 'boston registry domain name')
+        .action(function (_a) {
+        var domain = _a.domain;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                if (domain) {
+                    config_1.default.update('domain', domain);
+                }
+                return [2 /*return*/];
             });
         });
     });

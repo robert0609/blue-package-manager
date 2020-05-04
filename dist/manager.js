@@ -46,6 +46,7 @@ var fs_1 = __importDefault(require("fs"));
 var semver_1 = __importDefault(require("semver"));
 var buffer_1 = require("buffer");
 var dh_boston_type_1 = require("@xes/dh-boston-type");
+var config_1 = __importDefault(require("./config"));
 var BostonPackageManager = /** @class */ (function () {
     function BostonPackageManager(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.isOnline, isOnline = _c === void 0 ? false : _c, _d = _b.testKind, testKind = _d === void 0 ? 'super' : _d;
@@ -57,14 +58,14 @@ var BostonPackageManager = /** @class */ (function () {
         if (!fs_1.default.existsSync(configPath)) {
             throw new Error('bpm.config.js配置文件不存在');
         }
-        var _e = require(configPath), region = _e.region, accessKeyId = _e.accessKeyId, accessKeySecret = _e.accessKeySecret, bucket = _e.bucket, domain = _e.domain; // eslint-disable-line
+        var _e = require(configPath), region = _e.region, accessKeyId = _e.accessKeyId, accessKeySecret = _e.accessKeySecret, bucket = _e.bucket; // eslint-disable-line
         this._client = new ali_oss_1.default({
             region: region,
             accessKeyId: accessKeyId,
             accessKeySecret: accessKeySecret,
             bucket: bucket
         });
-        this._cdnDomain = domain;
+        this._cdnDomain = config_1.default.fetch('domain');
     }
     Object.defineProperty(BostonPackageManager.prototype, "registry", {
         get: function () {
@@ -105,6 +106,9 @@ var BostonPackageManager = /** @class */ (function () {
                         _a.label = 3;
                     case 3:
                         _a.trys.push([3, 8, , 9]);
+                        if (!files || files.length === 0) {
+                            throw new Error(localPath + "\u4E0B\u4E0D\u5B58\u5728\u4EFB\u4F55\u6587\u4EF6");
+                        }
                         return [4 /*yield*/, Promise.all(files.map(function (fileName) {
                                 var fn = path_1.default.relative(localPath, fileName);
                                 return _this._client.put("" + destPath + fn, fileName);
@@ -252,6 +256,9 @@ var BostonPackageManager = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
+                        if (!this._cdnDomain) {
+                            throw new Error('请设置微模块registry域名，设置方法：bpm config --domain "xxxx"');
+                        }
                         if (!fs_1.default.existsSync(localPath)) {
                             fs_1.default.mkdirSync(localPath, { recursive: true });
                         }

@@ -5,6 +5,7 @@ import fs from 'fs';
 import semver from 'semver';
 import { Buffer } from 'buffer';
 import { EnumModuleType } from '@xes/dh-boston-type';
+import configHelper from './config';
 
 export class BostonPackageManager {
   private _envIsOnline: boolean = false;
@@ -22,14 +23,14 @@ export class BostonPackageManager {
     if (!fs.existsSync(configPath)) {
       throw new Error('bpm.config.js配置文件不存在');
     }
-    const { region, accessKeyId, accessKeySecret, bucket, domain } = require(configPath); // eslint-disable-line
+    const { region, accessKeyId, accessKeySecret, bucket } = require(configPath); // eslint-disable-line
     this._client = new OSS({
       region,
       accessKeyId,
       accessKeySecret,
       bucket
     });
-    this._cdnDomain = domain;
+    this._cdnDomain = configHelper.fetch('domain');
   }
 
   private get registry(): string {
@@ -52,6 +53,10 @@ export class BostonPackageManager {
     }
     const files = await globby(`${localPath}**`);
     try {
+      if (!files || files.length === 0) {
+        throw new Error(`${localPath}下不存在任何文件`);
+      }
+
       const ps = await Promise.all(files.map(fileName => {
         const fn = path.relative(localPath, fileName);
         return this._client.put(`${destPath}${fn}`, fileName);
@@ -144,6 +149,11 @@ export class BostonPackageManager {
     name: string;
     version: string;
   }> {
+
+    if (!this._cdnDomain) {
+      throw new Error('请设置微模块registry域名，设置方法：bpm config --domain "xxxx"');
+    }
+
     if (!fs.existsSync(localPath)) {
       fs.mkdirSync(localPath, { recursive: true });
     }

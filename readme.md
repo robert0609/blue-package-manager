@@ -41,3 +41,9 @@ bpm publish xxxx -s 0.1.2
 ```bash
 bpm install xxxx
 ```
+
+## Todos
+
+- [ ] 从运行的当前包目录下，动态抓取版本号
+- [ ] 盘点dist目录是否存在和有子文件
+- [ ] 增加一个子命令，用来设置cdn域名
