@@ -22,8 +22,14 @@ export class BostonPackageManager {
     if (!fs.existsSync(configPath)) {
       throw new Error('bpm.config.js配置文件不存在');
     }
-    this._client = new OSS(require(configPath));
-    this._cdnDomain = 'https://butterfly001.oss-cn-beijing.aliyuncs.com';
+    const { region, accessKeyId, accessKeySecret, bucket, domain } = require(configPath);
+    this._client = new OSS({
+      region,
+      accessKeyId,
+      accessKeySecret,
+      bucket
+    });
+    this._cdnDomain = domain;
   }
 
   private get registry(): string {
