@@ -1,0 +1,6 @@
+build/
+src/
+test/
+.vscode/
+gulpfile.js
+npm-shrinkwrap.json

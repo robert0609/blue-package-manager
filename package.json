@@ -1,0 +1,39 @@
+{
+  "name": "@xes/dh-boston-package-manager",
+  "version": "1.0.0",
+  "description": "boston package manager",
+  "main": "./dist/index.js",
+  "bin": {
+    "bpm": "./bin/start.js"
+  },
+  "scripts": {
+    "prod": "gulp",
+    "dev": "gulp debug",
+    "lint": "gulp lint",
+    "build": "gulp"
+  },
+  "author": "1v1",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/ali-oss": "^6.0.5",
+    "@types/semver": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "del": "^5.1.0",
+    "eslint": "^6.5.1",
+    "gulp": "^4.0.2",
+    "gulp-eslint": "^6.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
+    "merge2": "^1.3.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@xes/dh-boston-type": "git+ssh://git@git.100tal.com:wangxiao_dahai_frontend/fe-dh-boston-type.git",
+    "ali-oss": "^6.7.0",
+    "commander": "^5.1.0",
+    "globby": "^11.0.0",
+    "ora": "^4.0.4",
+    "semver": "^7.3.2"
+  }
+}
