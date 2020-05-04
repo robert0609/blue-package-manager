@@ -30,6 +30,12 @@ module.exports = {
 
 ## Use
 
+### 设置Boston模块registry域名
+
+```bash
+bpm config --domain "https://registry.boston.xxx.com"
+```
+
 ### 发布Boston Library
 
 ```bash
