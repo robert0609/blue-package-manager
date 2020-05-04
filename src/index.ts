@@ -46,7 +46,7 @@ export default function (program: Commander.Command) {
         }
       } catch (e) {
         spinner.stop();
-        throw e;
+        console.error(e);
       }
     });
 
@@ -77,7 +77,7 @@ export default function (program: Commander.Command) {
         }
       } catch (e) {
         spinner.stop();
-        throw e;
+        console.error(e);
       }
     });
 

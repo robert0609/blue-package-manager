@@ -93,7 +93,8 @@ function default_1(program) {
                     case 3:
                         e_1 = _b.sent();
                         spinner.stop();
-                        throw e_1;
+                        console.error(e_1);
+                        return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -138,7 +139,8 @@ function default_1(program) {
                     case 3:
                         e_2 = _b.sent();
                         spinner.stop();
-                        throw e_2;
+                        console.error(e_2);
+                        return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
