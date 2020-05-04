@@ -22,7 +22,7 @@ export class BostonPackageManager {
     if (!fs.existsSync(configPath)) {
       throw new Error('bpm.config.js配置文件不存在');
     }
-    const { region, accessKeyId, accessKeySecret, bucket, domain } = require(configPath);
+    const { region, accessKeyId, accessKeySecret, bucket, domain } = require(configPath); // eslint-disable-line
     this._client = new OSS({
       region,
       accessKeyId,

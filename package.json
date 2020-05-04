@@ -1,6 +1,6 @@
 {
   "name": "@xes/dh-boston-package-manager",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "boston package manager",
   "main": "./dist/index.js",
   "bin": {
