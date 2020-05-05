@@ -297,7 +297,7 @@ var BostonPackageManager = /** @class */ (function () {
                             dependencies = Object.keys(remoteModuleJson);
                         }
                         dependencies.forEach(function (d) {
-                            var exportsName = remoteModuleJson[d];
+                            var exportsName = remoteModuleJson[d].exportName;
                             if (exportsName) {
                                 manifestLocal[d] = _this._cdnDomain + "/" + remoteModuleJsFile + "!" + exportsName;
                             }

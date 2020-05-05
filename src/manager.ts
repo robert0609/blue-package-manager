@@ -191,7 +191,7 @@ export class BostonPackageManager {
     }
 
     dependencies.forEach(d => {
-      const exportsName = remoteModuleJson[d];
+      const exportsName = remoteModuleJson[d].exportName;
       if (exportsName) {
         manifestLocal[d] = `${this._cdnDomain}/${remoteModuleJsFile}!${exportsName}`;
       } else {
