@@ -14,10 +14,10 @@ var PackageInfo = /** @class */ (function () {
         get: function () {
             try {
                 this.readPackageFile();
-                return this._package['name'];
+                return this._package['microAppName'];
             }
             catch (e) {
-                throw new Error("\u4ECEpackage\u4E2D\u8BFB\u53D6name\u5931\u8D25\uFF0C" + (e.message ? e.message : e.toString()));
+                throw new Error("\u4ECEpackage\u4E2D\u8BFB\u53D6microAppName\u5931\u8D25\uFF0C" + (e.message ? e.message : e.toString()));
             }
         },
         enumerable: true,

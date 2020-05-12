@@ -13,9 +13,9 @@ class PackageInfo {
   get name(): string {
     try {
       this.readPackageFile();
-      return this._package['name'];
+      return this._package['microAppName'];
     } catch (e) {
-      throw new Error(`从package中读取name失败，${e.message ? e.message : e.toString()}`);
+      throw new Error(`从package中读取microAppName失败，${e.message ? e.message : e.toString()}`);
     }
   }
 

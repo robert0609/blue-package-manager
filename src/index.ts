@@ -16,7 +16,7 @@ export default function (program: Commander.Command) {
     .option('-d, --dir <dir>', 'local directory of library', 'dist')
     .option('-t, --type <type>', 'boston library type', 'module')
     .option('-o, --online <online>', 'production environment or not', false)
-    .option('-k, --kind <kind>', 'test environment kind', 'super')
+    .option('-k, --kind <kind>', 'test environment kind', 'local')
     .action(async function (name: string, { semver, dir, type, online, kind }: { semver: string; dir: string; type: EnumModuleType; online: boolean; kind: string; }) {
       const spinner = ora('publishing boston library...');
       spinner.start();
@@ -54,7 +54,7 @@ export default function (program: Commander.Command) {
     .command('install <name> [modules...]')
     .description('install module from boston library')
     .option('-o, --online <online>', 'production environment or not', false)
-    .option('-k, --kind <kind>', 'test environment kind', 'super')
+    .option('-k, --kind <kind>', 'test environment kind', 'local')
     .action(async function (name: string, modules: string[], { online, kind }: { online: boolean; kind: string; }) {
       const spinner = ora('installing boston library...');
       spinner.start();

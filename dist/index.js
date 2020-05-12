@@ -53,7 +53,7 @@ function default_1(program) {
         .option('-d, --dir <dir>', 'local directory of library', 'dist')
         .option('-t, --type <type>', 'boston library type', 'module')
         .option('-o, --online <online>', 'production environment or not', false)
-        .option('-k, --kind <kind>', 'test environment kind', 'super')
+        .option('-k, --kind <kind>', 'test environment kind', 'local')
         .action(function (name, _a) {
         var semver = _a.semver, dir = _a.dir, type = _a.type, online = _a.online, kind = _a.kind;
         return __awaiter(this, void 0, void 0, function () {
@@ -104,7 +104,7 @@ function default_1(program) {
         .command('install <name> [modules...]')
         .description('install module from boston library')
         .option('-o, --online <online>', 'production environment or not', false)
-        .option('-k, --kind <kind>', 'test environment kind', 'super')
+        .option('-k, --kind <kind>', 'test environment kind', 'local')
         .action(function (name, modules, _a) {
         var online = _a.online, kind = _a.kind;
         return __awaiter(this, void 0, void 0, function () {

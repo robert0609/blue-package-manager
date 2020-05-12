@@ -49,6 +49,3 @@ bpm install xxxx
 ```
 
 ## Todos
-
-- [ ] dev环境的区分得增加一下
-- [ ] 发布的时候，包名从package.json中的microAppName字段获取
